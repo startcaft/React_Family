@@ -15,10 +15,13 @@ class Todo {
 }
 
 class TodoList {
+
     @observable todos = [];
+
     @computed get unFinishedList(){
         return this.todos.filter(todo => !todo.finished);
     }
+    
     @computed get FinishedList(){
         return this.todos.filter(todo => todo.finished);
     }
