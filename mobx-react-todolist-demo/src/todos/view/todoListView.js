@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {inject, observer} from 'mobx-react';
-import TodoView from './todoView';;
+import TodoView from './todoView';
+import FinishedView from './finishedView';
 
 @inject('rootStore')
 @observer
@@ -29,19 +30,21 @@ class TodoListView extends Component {
                     {
                         this.todoListStore.unFinishedList.slice(0).map((todo,index) => {
                             return (
-                                <TodoView todo={todo} key={todo.id} />
+                                <TodoView todo={todo} key={todo.id} onFinish={this.todoListStore.finishTodo}  />
                             )
                         })
                     }
                 </ol>
                 <hr/>
                 Tasks left: {this.todoListStore.unFinishedList.length}
-                {/* <h2>已完成任务</h2>
+                <h2>已完成任务</h2>
                 <ol>
-                    {todoStore.FinishedList.map((todo) =>
-                        <FinishedView todo={todo} key={todo.id} />
-                    )}
-                </ol> */}
+                    {
+                        this.todoListStore.FinishedList.map((todo) =>
+                            <FinishedView todo={todo} key={todo.id} />
+                        )
+                    }
+                </ol>
             </div>
         )
     }

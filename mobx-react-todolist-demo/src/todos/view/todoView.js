@@ -1,18 +1,18 @@
 import React from 'react';
-import { observer } from 'mobx-react';
 
-const TodoView = observer((props) => {
-    let {todo} = props;
+const TodoView = (props) => {
+    let {todo,onFinish} = props;
+
     return (
         <li>
             <input
                 type="checkbox"
                 checked={todo.finished}
-                // onClick={todo.finish.bind(todo)}
+                onClick={() => onFinish(todo)}
                 />
             {todo.content}
         </li>
     )
-});
+};
 
 export default TodoView;

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import store from './store';
 import {todoListView as TodoListView} from './todos/index';
 
 class App extends Component {

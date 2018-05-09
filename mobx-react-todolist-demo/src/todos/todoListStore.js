@@ -31,5 +31,10 @@ export default class TodoListStore {
         }
         return false;
     }
+
+    @action
+    finishTodo(todo){
+        todo.finished = true;
+    }
 }
 
