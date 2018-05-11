@@ -5,7 +5,7 @@ class LoginStore {
 
     @observable loading = false;
     @observable token = localStorage.getItem('token');
-    @observable msg; 
+    @observable msg;
     @observable isShow = false;
 
     constructor(rootStore){
@@ -20,9 +20,12 @@ class LoginStore {
         this.rootStore.loginStore.isShow = true;
     }
 
+    @action loginOut = () => {
+        this.rootStore.loginStore.token = null;
+    }
+
     @computed get isLoginSuccess(){
-        console.log(this.rootStore.loginStore.msg);
-        if(!this.rootStore.loginStore.msg){
+        if(this.rootStore.loginStore.msg === undefined){
             return true;
         }
         else {
@@ -52,9 +55,14 @@ class LoginStore {
             runInAction('loginSuccess',() => {
                 if(res.reqSuccess){
                     this.rootStore.loginStore.token = res.data;
+                    this.rootStore.loginStore.msg = undefined;
+                    // 标识可以关闭登陆窗口
+                    this.rootStore.loginStore.isShow = false;
                 }
                 else {
                     this.rootStore.loginStore.msg = res.msg;
+                    // 登陆错误，登陆窗口不关闭
+                    this.rootStore.loginStore.isShow = true;
                 }
                 this.rootStore.loginStore.loading = false;
             })

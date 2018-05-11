@@ -15,7 +15,8 @@ import {
     Modal,
     Input,
     message,
-    Form
+    Form,
+    Alert
 } from 'antd';
 import {menus as menuArray} from '../../constants/menus';
 import { withRouter } from 'react-router-dom';
@@ -33,18 +34,11 @@ class BlogHeader extends Component {
         super(props);
 
         this.loginStore = props.rootStore.loginStore;
-        this.handleChange = this.handleChange.bind(this);
+
         this.handleLogout = this.handleLogout.bind(this);
-        
         this.handleSubmit = this.handleSubmit.bind(this);
         this.showLoginModal = this.showLoginModal.bind(this);
         this.closeLoginModal = this.closeLoginModal.bind(this);
-
-        this.usernameValue = '';
-    }
-
-    onValueChange(e){
-        console.log(e.target.value);
     }
 
     showLoginModal(){
@@ -53,12 +47,6 @@ class BlogHeader extends Component {
 
     closeLoginModal(){
         this.loginStore.closeModel();
-    }
-
-    handleChange(event){
-        // this.setState({
-        //     [event.target.name]: event.target.value
-        // })
     }
 
     handleSubmit(e){
@@ -70,30 +58,20 @@ class BlogHeader extends Component {
         });
 
         const formData = this.props.form.getFieldsValue();
-
         this.loginStore.userLogin(formData.username,formData.password);
-        if(!this.loginStore.msg){
-            
-            this.closeLoginModal();
-        }
-        else {
-            message.warn(this.loginStore.msg)
-        }
     }
 
     handleLogout(){
-        // localStorage.removeItem('token');
-        // this.setState({
-        //     token:''
-        // });
-
-        // this.props.history.push('/index');
+        this.loginStore.loginOut();
+        this.props.history.push('/index');
     }
 
     render(){
         const { Header } = Layout;
         const {token,isShow,loading} = this.loginStore;
         const { getFieldDecorator } = this.props.form;
+
+        console.log(this.loginStore.isLoginSuccess);
 
         return(
             <Header className="header-container">
@@ -167,7 +145,6 @@ class BlogHeader extends Component {
                                 ghost
                                 type="danger"
                                 size="small"
-                                // disabled={this.state.isWrite ? false : true}
                                 // onClick={() => this.props.history.push('/write')}
                             >
                                 发表
