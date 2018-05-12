@@ -1,0 +1,29 @@
+/**
+列表项的样式
+ */
+
+.row_container{
+    padding:0 10px;
+}
+.row_container .title{
+    font-size:14px;
+    border-bottom:1px solid #F6F6F6;
+    font-weight: bold;
+    line-height: 34px;
+}
+.row_container .desc_container{
+    display: -webkit-box;
+    display: flex;
+    padding: 15px 0;
+}
+.row_container .desc_container img{
+    height:64px;
+    margin-right:15px;
+}
+.row_container .desc_container .text{
+    line-height: 1;
+}
+.row_container .desc_container .text div {
+    margin-bottom: 8px;
+    color: #888;
+}
