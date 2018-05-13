@@ -4,8 +4,8 @@
 
 import typeList from './view/typeList';
 import simpleListView from './view/simpleListView';
-import reduxListView from './view/reduxListView';
 import articleStore from './articleStore';
+import articleDetail from './view/articleDetail';
 
 
-export {typeList,simpleListView,reduxListView,articleStore};
+export {typeList,simpleListView,articleStore,articleDetail};

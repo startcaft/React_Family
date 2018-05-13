@@ -12,6 +12,7 @@ class ArticleStore {
     @observable hasMore = false;
     @observable isLoading = false;
     @observable error = null;
+    @observable detail = {};
 
     ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
 
@@ -63,6 +64,35 @@ class ArticleStore {
                 this.root.articleStore.isLoading = false;
             })
         })
+    }
+
+    @action
+    getArticleDetail(id){
+
+        let url = `http://119.23.56.247:8223/core/articles/${id}`;
+
+        this.root.articleStore.isLoading = true;
+
+        fetch(url,{
+            method:'GET'
+        }).then((res) => {
+            if(res.status !== 200){
+                throw new Error('Fail to get response with status ' + res.status);
+            }
+            return res.json()
+        }).then((res) => {
+            runInAction("fetchDetailSuccess",() => {
+                this.root.articleStore.detail = res.data;
+                this.root.articleStore.isLoading = false;
+            })
+        }).catch((error) => {
+            runInAction("fetchDetailFail",() => {
+                this.root.articleStore.error = '请求数据失败!';
+                this.root.articleStore.isLoading = false;
+            })
+        })
+
+
     }
 }
 

@@ -3,11 +3,12 @@
  */
 
 import React from 'react';
+import history from '../../Common/history';
 import '../../asserts/css/listitem.css';
 
 function ListItem({rowData, sectionID, rowID}){
     return (
-        <div key={rowID} className="row_container" onClick={() => console.log(rowID)}>
+        <div key={rowID} className="row_container" onClick={() => history.push(`/detail/${rowData.id}`)}>
             <div className="title">
                 {rowData.articleTitle}
             </div>

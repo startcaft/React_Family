@@ -10,9 +10,6 @@ import ListItem from './listItem';
 import { observable } from 'mobx';
 import { observer,inject } from 'mobx-react';
 
-// 当前请求页
-let pageIndex = 1;
-let pageSize = 5;
 
 @inject('rootStore')
 @observer
