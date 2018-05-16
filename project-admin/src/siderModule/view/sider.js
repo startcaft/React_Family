@@ -5,24 +5,40 @@
 import React, { Component } from 'react';
 import { Layout, Menu, Icon } from 'antd';
 import { Link } from 'react-router-dom';
+import { observer,inject } from 'mobx-react';
 
 const { Sider } = Layout;
 const SubMenu = Menu.SubMenu;
 
+function createMenu(menus){
+    menus.forEach((menu,index) => {
+
+    })
+}
+
+@inject('rootStore')
+@observer
 export default class SiderView extends Component{
-    // constructor(props){
-    //     super(props);
-    //     const { collapsed }= props;
-    //     this.state = {
-    //         collapsed: collapsed,
-    //         firstHide: true, //第一次先隐藏暴露的子菜单
-    //         selectedKey: '', //选择的路径
-    //         openKey: '', //打开的路径（选择的上一层）
-    //     }
-    // }
-    // componentDidMount() {
-    //     this.setMenuOpen(this.props);
-    // }
+    constructor(props){
+        super(props);
+
+        this.siderStore = props.rootStore.siderStore;
+        // const { collapsed }= props;
+        // this.state = {
+        //     collapsed: collapsed,
+        //     firstHide: true, //第一次先隐藏暴露的子菜单
+        //     selectedKey: '', //选择的路径
+        //     openKey: '', //打开的路径（选择的上一层）
+        // }
+    }
+
+
+    componentDidMount() {
+        // this.setMenuOpen(this.props);
+
+        const userToken = JSON.parse(localStorage.getItem('token'));
+        this.siderStore.fetchUserMenus(userToken.username,userToken.token);
+    }
     // componentWillReceiveProps(nextProps) {
     //     this.onCollapse(nextProps.collapsed);
     //     this.setMenuOpen(nextProps);
@@ -54,6 +70,7 @@ export default class SiderView extends Component{
     render(){
         // const { collapsed, firstHide, openKey, selectedKey } = this.state;
         const collapsed = false;
+        console.log(this.siderStore.menus.slice());
         return(
             <Sider
                 trigger={null}
@@ -68,21 +85,23 @@ export default class SiderView extends Component{
                     // onOpenChange={this.openMenu}
                     // openKeys={firstHide ? null : [openKey]}
                 >
-
-                    <Menu.Item key={"/app"}>
-                        <Link to={"/app"}><Icon type="home" /><span>首页</span></Link>
-                    </Menu.Item>
-                    <Menu.Item key={"/app/form"}>
-                        <Link to={"/app/form"}><Icon type="edit" /><span>表单</span></Link>
-                    </Menu.Item>
-                    <SubMenu
-                        key="/app/chart"
-                        title={<span><Icon type="area-chart" /><span>图表</span></span>}
-                    >
-                        <Menu.Item key="/app/chart/echarts">
-                            <Link to={'/app/chart/echarts'}><span>echarts</span></Link>
-                        </Menu.Item>
-                    </SubMenu>
+                    {
+                        this.siderStore.menus.map((currentValue) => {
+                            return (
+                                <SubMenu key={currentValue.id} title={<span><Icon type={!currentValue.icon ? 'appstore' : currentValue.icon} /><span>{currentValue.name}</span></span>}>
+                                    {
+                                        currentValue.children.map((child) => {
+                                            return (
+                                                <Menu.Item key={child.id}>
+                                                    <Link to={`/main${child.url}`}><span>{child.name}</span></Link>
+                                                </Menu.Item>
+                                            )
+                                        })
+                                    }
+                                </SubMenu>
+                            )
+                        })
+                    }
                 </Menu>
             </Sider>
         )

@@ -22,12 +22,18 @@ class Main extends Component {
         }
     }
 
+    handleClick(){
+        localStorage.removeItem("token");
+    }
+
     render(){
         let name;
+        let token;
         if (localStorage.getItem("token") === null) {
             return <Redirect to="/login"/>
         } else {
-            name = JSON.parse(localStorage.getItem("token")).loginName;
+            name = JSON.parse(localStorage.getItem("token")).username;
+            token = JSON.parse(localStorage.getItem("token")).token;
         }
 
         return (
@@ -44,6 +50,10 @@ class Main extends Component {
                             {/*<Route component={noMatch} />*/}
                         {/*</Switch>*/}
                         <div>{name}</div>
+                        <div>{token}</div>
+                        <div>
+                            <button onClick={this.handleClick}>注销</button>
+                        </div>
                     </Content>
                     <Footer style={{textAlign: 'center'}}>
                         STARTCAFT ©2017-2018 Created by startcaft

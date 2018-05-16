@@ -35,7 +35,7 @@ class Login extends Component {
                 let that = this;
                 setTimeout(function() { //延迟进入
                     if(that.loginStore.isLoginSuccess){
-                        localStorage.setItem("token",JSON.stringify(values));
+                        localStorage.setItem("token",JSON.stringify(that.loginStore.token));
                         that.props.history.push('/main');
                     }
                 }, 200);

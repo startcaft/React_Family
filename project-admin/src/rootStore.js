@@ -3,10 +3,12 @@
  */
 
 import { loginStore as LoginStore } from './commons/index';
+import { siderStore as SiderStore } from './siderModule/index';
 
 class RootStore {
     constructor(){
         this.loginStore = new LoginStore(this);
+        this.siderStore = new SiderStore(this);
     }
 }
 

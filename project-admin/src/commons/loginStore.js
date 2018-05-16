@@ -50,7 +50,7 @@ class LoginStore {
         }).then((res) => {
             runInAction('loginSuccess',() => {
                 if(res.reqSuccess){
-                    this.rootStore.loginStore.token = res.data;
+                    this.rootStore.loginStore.token = {username:username,token:res.data};
                     this.rootStore.loginStore.msg = undefined;
                 }
                 else {

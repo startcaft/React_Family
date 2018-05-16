@@ -3,5 +3,6 @@
  */
 
 import siderView from './view/sider';
+import siderStore from './siderStore';
 
-export { siderView };
+export { siderView,siderStore };
