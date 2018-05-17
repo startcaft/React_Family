@@ -5,9 +5,11 @@
 
 
 import NoMatch from './noMatch';
-import login from './login';
-import loginStore from './loginStore';
 import home from './home';
 import main from './main';
+import calendars from './calendars';
+import breadcrumb from './breadcrumb';
+import commonStore from './commonStore';
 
-export {NoMatch,loginStore,login,home,main};
+
+export {NoMatch,home,main,commonStore,calendars,breadcrumb};

@@ -3,8 +3,8 @@
  */
 
 import React, {Component} from 'react';
-import '../assets/login.less';
-import {Form, Icon, Input, Button, Checkbox, Alert, Spin} from 'antd';
+import '../../assets/login.less';
+import {Form, Icon, Input, Button, Checkbox, message, Spin} from 'antd';
 import {withRouter} from "react-router-dom";
 import {observer,inject} from 'mobx-react';
 
@@ -36,13 +36,15 @@ class Login extends Component {
                 setTimeout(function() { //延迟进入
                     if(that.loginStore.isLoginSuccess){
                         localStorage.setItem("token",JSON.stringify(that.loginStore.token));
+                        message.success('login successed!'); //成功信息
                         that.props.history.push('/main');
+                    }
+                    else {
+                        message.error('login failed!'); //失败信息
                     }
                 }, 200);
             }
         });
-
-
     }
 
     render(){
@@ -85,13 +87,13 @@ class Login extends Component {
                         </FormItem>
                     </Form>
                     <a className="githubUrl" href="https://github.com/zhaoyu69/antd-spa"> </a>
-                    <Alert
-                        message="Warning"
-                        description={msg}
-                        type="warning"
-                        showIcon
-                        style={{display:msg === undefined ? 'none' : 'block',marginTop:'10px'}}
-                    />
+                    {/*<Alert*/}
+                        {/*message="Warning"*/}
+                        {/*description={msg}*/}
+                        {/*type="warning"*/}
+                        {/*showIcon*/}
+                        {/*style={{display:msg === undefined ? 'none' : 'block',marginTop:'10px'}}*/}
+                    {/*/>*/}
                 </div>
             </div>
         );

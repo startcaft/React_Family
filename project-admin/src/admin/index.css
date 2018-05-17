@@ -1,0 +1,103 @@
+.mindex {
+  minHeight: 360;
+}
+.mindex .countBox {
+  padding: 5px 20px;
+  overflow: hidden;
+}
+.mindex .countBox img {
+  float: left;
+}
+.mindex .countBox dl {
+  float: left;
+  padding-left: 20px;
+  font-size: 20px;
+}
+.mindex .avatar {
+  text-align: center;
+  padding: 50px 0;
+  line-height: 25px;
+  background: url("../assets/img/avatar_bg.jpg") no-repeat center center / cover;
+}
+.mindex .weather {
+  overflow: hidden;
+  padding: 10px 0;
+  width: 120px;
+  margin: 0 auto;
+}
+.mindex .weather .weather-img {
+  float: left;
+}
+.mindex .weather .weather-img img {
+  width: 45px;
+  height: 35px;
+}
+.mindex .weather .weather-info {
+  float: left;
+  line-height: 35px;
+  height: 35px;
+}
+.mindex .pro {
+  text-align: center;
+  margin-top: 10px;
+}
+.mindex .pro p {
+  height: 30px;
+  line-height: 30px;
+  font-size: 14px;
+}
+.mindex .pro #pro1 .ant-progress-circle-path {
+  stroke: red;
+  opacity: .6;
+}
+.mindex .pro #pro2 .ant-progress-circle-path {
+  stroke: blue;
+  opacity: .6;
+}
+.mindex .pro #pro3 .ant-progress-circle-path {
+  stroke: purple;
+  opacity: .6;
+}
+.mindex .timeline {
+  margin-top: 22px;
+}
+.mindex .timeline p {
+  line-height: 25px;
+}
+.mindex .collapse {
+  margin-top: 22px;
+}
+.mindex .collapse .ant-collapse {
+  background: #fff;
+  border: 0;
+}
+.mindex .collapse .ant-collapse .ant-collapse-item {
+  margin-bottom: 15px;
+}
+.mindex .collapse .ant-collapse .ant-collapse-item .ant-collapse-header {
+  color: #fff;
+  background: lightcoral;
+  letter-spacing: 5px;
+}
+.mindex .collapse .ant-collapse .ant-collapse-item .ant-collapse-header .arrow {
+  letter-spacing: 0;
+  color: #fff;
+}
+.mindex .collapse .ant-collapse .ant-collapse-item .ant-collapse-content {
+  padding: 10px 20px;
+}
+.mindex .collapse .ant-collapse .ant-collapse-item .ant-collapse-content p {
+  line-height: 25px;
+}
+.mindex .collapse .ant-collapse .ant-collapse-item .ant-collapse-content .author {
+  text-align: right;
+}
+.mindex .ant-table-thead > tr > th,
+.mindex .ant-table-tbody > tr > td {
+  text-align: center;
+}
+.mindex th.column-written,
+.mindex td.column-written {
+  text-align: left !important;
+  padding-left: 5%;
+}

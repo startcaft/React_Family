@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import {NoMatch,login as LoginForm,home as Home,main as Main} from './commons/index';
+import { NoMatch,home as Home,main as Main } from './commons/index';
+import { login as LoginForm } from './login/index';
 
 class App extends Component {
   render() {

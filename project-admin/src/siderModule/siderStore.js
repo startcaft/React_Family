@@ -5,12 +5,12 @@
 import { observable,action, runInAction } from 'mobx';
 
 class SiderStore {
+
     constructor(rootStore){
         this.rootStore = rootStore;
     }
 
     @observable loading = false;
-    @observable collapsed = localStorage.getItem('collapsed');
     @observable msg;
     @observable menus = [];
 

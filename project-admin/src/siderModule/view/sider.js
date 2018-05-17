@@ -10,11 +10,6 @@ import { observer,inject } from 'mobx-react';
 const { Sider } = Layout;
 const SubMenu = Menu.SubMenu;
 
-function createMenu(menus){
-    menus.forEach((menu,index) => {
-
-    })
-}
 
 @inject('rootStore')
 @observer
@@ -23,12 +18,14 @@ export default class SiderView extends Component{
         super(props);
 
         this.siderStore = props.rootStore.siderStore;
+        this.commonStore = props.rootStore.commonStore;
+
         // const { collapsed }= props;
         // this.state = {
         //     collapsed: collapsed,
-        //     firstHide: true, //第一次先隐藏暴露的子菜单
-        //     selectedKey: '', //选择的路径
-        //     openKey: '', //打开的路径（选择的上一层）
+        //     // firstHide: true, //第一次先隐藏暴露的子菜单
+        //     // selectedKey: '', //选择的路径
+        //     // openKey: '', //打开的路径（选择的上一层）
         // }
     }
 
@@ -41,7 +38,7 @@ export default class SiderView extends Component{
     }
     // componentWillReceiveProps(nextProps) {
     //     this.onCollapse(nextProps.collapsed);
-    //     this.setMenuOpen(nextProps);
+    //     // this.setMenuOpen(nextProps);
     // }
     // setMenuOpen = props => {
     //     const {path} = props;
@@ -53,7 +50,7 @@ export default class SiderView extends Component{
     // onCollapse = (collapsed) => {
     //     this.setState({
     //         collapsed,
-    //         firstHide: collapsed,
+    //         // firstHide: collapsed,
     //     });
     // };
     // menuClick = e => {
@@ -69,8 +66,9 @@ export default class SiderView extends Component{
     // };
     render(){
         // const { collapsed, firstHide, openKey, selectedKey } = this.state;
-        const collapsed = false;
-        console.log(this.siderStore.menus.slice());
+
+        const collapsed = this.commonStore.collapsed;
+
         return(
             <Sider
                 trigger={null}
