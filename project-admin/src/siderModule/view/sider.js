@@ -19,27 +19,19 @@ export default class SiderView extends Component{
 
         this.siderStore = props.rootStore.siderStore;
         this.commonStore = props.rootStore.commonStore;
-
-        // const { collapsed }= props;
-        // this.state = {
-        //     collapsed: collapsed,
-        //     // firstHide: true, //第一次先隐藏暴露的子菜单
-        //     // selectedKey: '', //选择的路径
-        //     // openKey: '', //打开的路径（选择的上一层）
-        // }
     }
 
+    menuClick = e => {
+        // this.setState({
+        //     selectedKey: e.key
+        // });
+        console.log(e.key);
+    };
 
     componentDidMount() {
-        // this.setMenuOpen(this.props);
-
         const userToken = JSON.parse(localStorage.getItem('token'));
         this.siderStore.fetchUserMenus(userToken.username,userToken.token);
     }
-    // componentWillReceiveProps(nextProps) {
-    //     this.onCollapse(nextProps.collapsed);
-    //     // this.setMenuOpen(nextProps);
-    // }
     // setMenuOpen = props => {
     //     const {path} = props;
     //     this.setState({
@@ -65,8 +57,6 @@ export default class SiderView extends Component{
     //     })
     // };
     render(){
-        // const { collapsed, firstHide, openKey, selectedKey } = this.state;
-
         const collapsed = this.commonStore.collapsed;
 
         return(
@@ -79,7 +69,7 @@ export default class SiderView extends Component{
                     theme="dark"
                     mode="inline"
                     // selectedKeys={[selectedKey]}
-                    // onClick={this.menuClick}
+                    onClick={this.menuClick}
                     // onOpenChange={this.openMenu}
                     // openKeys={firstHide ? null : [openKey]}
                 >
@@ -90,7 +80,7 @@ export default class SiderView extends Component{
                                     {
                                         currentValue.children.map((child) => {
                                             return (
-                                                <Menu.Item key={child.id}>
+                                                <Menu.Item key={child.url}>
                                                     <Link to={`/main${child.url}`}><span>{child.name}</span></Link>
                                                 </Menu.Item>
                                             )

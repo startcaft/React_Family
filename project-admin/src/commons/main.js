@@ -11,7 +11,7 @@ import NoMatch from './noMatch';
 import { siderView as SiderView } from '../siderModule/index';
 import { header as HeaderView } from '../headerModule/index';
 import { calendars as Calendars } from '../commons/index';
-import { index as IndexView } from '../admin/index';
+import { index as IndexView,roleIndex as RoleIndex } from '../roleMgr/index';
 
 
 const {Content, Footer} = Layout;
@@ -41,6 +41,7 @@ class Main extends Component {
                     <Content style={{margin: '0 16px'}}>
                         <Switch>
                         <Route exact path={'/main'} component={IndexView} />
+                        <Route path={'/main/admin/role/list'} component={RoleIndex} />
                         {/*<Route exact path={'/app/form'} component={UForm} />*/}
                         <Route exact path={'/main/calendars'} component={Calendars} />
                         {/*<Route exact path={'/app/chart/echarts'} component={Echarts} />*/}
