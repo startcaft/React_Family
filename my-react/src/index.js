@@ -1,7 +1,11 @@
 
 import './index.css';
 
-console.log('webpack!!!');
+const func = (str) => {
+    document.getElementById('app').innerHTML = str;
+};
+
+func('现在开始使用Bable!');
 
 
 if (module.hot) {

@@ -22,6 +22,11 @@ module.exports = {
             {
                 test:/\.css$/,
                 use:'css-loader'
+            },
+            {
+                test: /\.js$/,
+                use: ['babel-loader?cacheDirectory=true'],
+                include: path.join(__dirname, 'src')
             }
         ]
     },
