@@ -27,8 +27,6 @@ class Login extends Component {
         e.preventDefault();
         this.props.form.validateFieldsAndScroll((err, values) => {
             if (!err) {
-                console.log('Received values of form: ', values);
-
                 // 执行登陆
                 this.loginStore.userLogin(values.loginName,values.password);
 
@@ -49,7 +47,7 @@ class Login extends Component {
 
     render(){
         const { getFieldDecorator } = this.props.form;
-        const {loading,msg} = this.loginStore;
+        const {loading} = this.loginStore;
         return (
             loading ? <Spin size="large" className="loading" /> :
             <div className="login">

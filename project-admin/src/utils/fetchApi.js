@@ -39,6 +39,36 @@ function fetchDataGet(token = null,url,stratCallBack,successCallBack,failCallBac
         });
 }
 
+function postData(token = null,data={},url,stratCallBack,successCallBack,failCallBack){
+
+    stratCallBack();
+
+    const myHeaders = new Headers();
+    myHeaders.append('Content-Type', 'application/json');
+    if(token != null){
+        myHeaders.append('Authorization',token);
+    }
+
+    fetch(url, {
+        method: 'POST',
+        headers: myHeaders,
+        body: JSON.stringify(data)
+    }).then((res) => {
+        if (res.status !== 200) {
+            throw new Error('Fail to get response with status ' + res.status);
+        }
+        return res.json()
+    }).then((res) => {
+        runInAction(() => {
+            successCallBack(res);
+        })
+    }).catch((error) => {
+        runInAction(() => {
+            failCallBack(error);
+        })
+    });
+}
 
 
-export { fetchDataGet };
+
+export { fetchDataGet,postData };

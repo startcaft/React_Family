@@ -4,6 +4,6 @@
 
 import index from './view/index';
 import roleStore from './roleStore.js';
-import roleIndex from './view/roleIndex';
+import roleList from './view/roleList';
 
-export {index,roleStore,roleIndex};
+export {index,roleStore,roleList};

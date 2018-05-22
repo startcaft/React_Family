@@ -28,9 +28,19 @@ export default class SiderView extends Component{
         console.log(e.key);
     };
 
-    componentDidMount() {
+    componentWillMount(){
         const userToken = JSON.parse(localStorage.getItem('token'));
-        this.siderStore.fetchUserMenus(userToken.username,userToken.token);
+        if(userToken == null){
+            alert('token过期，需要重新登陆');
+        }
+        else {
+            this.userToken = userToken;
+        }
+    }
+
+    componentDidMount() {
+        console.log(this.userToken.token);
+        this.siderStore.fetchUserMenus(this.userToken.username,this.userToken.token);
     }
     // setMenuOpen = props => {
     //     const {path} = props;
