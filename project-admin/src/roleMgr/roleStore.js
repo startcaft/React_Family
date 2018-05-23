@@ -17,6 +17,7 @@ class RoleStore {
     // 是否更新
     @observable isUpdate = false;
     @observable roles = [];
+    @observable role = {};
     @observable msg;
 
     @action
@@ -48,6 +49,21 @@ class RoleStore {
     }
 
     @action
+    getDetail(token,roleId) {
+        const startCb = () => {
+        }
+        const successCb = (res) => {
+            // console.log(res);
+            this.rootStore.roleStore.role = res.data;
+        }
+        const failCb = (error) => {
+            console.log(error);
+            this.rootStore.roleStore.msg = '获取数据失败';
+        }
+        fetchDataGet(token, `http://119.23.56.247:8223/core/roles/${roleId}`, startCb,successCb, failCb);
+    }
+
+    @action
     searchRoles(token,roleName) {
         const startCb = () => {
             this.rootStore.roleStore.loading = true;
@@ -67,6 +83,7 @@ class RoleStore {
     @action
     saveRole(token,data) {
         const startCb = () => {
+            this.rootStore.roleStore.loading = true;
         }
         const successCb = (res) => {
             if(res.reqSuccess){
@@ -76,12 +93,39 @@ class RoleStore {
             else {
                 this.rootStore.roleStore.msg = res.msg;
             }
+            this.rootStore.roleStore.loading = false;
         }
         const failCb = (error) => {
             console.log(error);
+            this.rootStore.roleStore.msg = '添加数据失败';
+            this.rootStore.roleStore.loading = false;
         }
 
         postData(token,data, 'http://119.23.56.247:8223/core/roles/save', startCb,successCb, failCb);
+    }
+
+    @action
+    updateRole(token,data) {
+        const startCb = () => {
+            this.rootStore.roleStore.loading = true;
+        }
+        const successCb = (res) => {
+            if(res.reqSuccess){
+                this.rootStore.roleStore.msg = undefined;
+                this.rootStore.roleStore.visible = false;
+            }
+            else {
+                this.rootStore.roleStore.msg = res.msg;
+            }
+            this.rootStore.roleStore.loading = false;
+        }
+        const failCb = (error) => {
+            console.log(error);
+            this.rootStore.roleStore.msg = '更新数据失败';
+            this.rootStore.roleStore.loading = false;
+        }
+
+        postData(token,data, 'http://119.23.56.247:8223/core/roles/modify', startCb,successCb, failCb);
     }
 }
 

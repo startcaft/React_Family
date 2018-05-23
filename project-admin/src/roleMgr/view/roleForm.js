@@ -3,25 +3,12 @@
  */
 
 import React, { Component } from 'react';
-import { Modal, Form, Input, Radio, InputNumber, Cascader, Select, AutoComplete } from 'antd';
+import { Modal, Form, Input } from 'antd';
 
 const FormItem = Form.Item;
 const { TextArea } = Input;
-const options = [];
 
 class RoleForm extends Component{
-    constructor(props){
-        super(props);
-    }
-    handleWebsiteChange = (value) => {
-        // let autoCompleteResult;
-        // if (!value) {
-        //     autoCompleteResult = [];
-        // } else {
-        //     autoCompleteResult = ['.com', '.cn', '.org', '.net'].map(domain => `${value}${domain}`);
-        // }
-        // this.setState({ autoCompleteResult });
-    };
     render(){
         const { visible, onCancel, onCreate, form, okText, title } = this.props;
         const { getFieldDecorator } = form;
