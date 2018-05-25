@@ -36,6 +36,10 @@ module.exports = {
                         limit: 8192
                     }
                 }]
+            },
+            {
+                test: /\.(htm|html)$/i,
+                 use:[ 'html-withimg-loader'] 
             }
         ]
     },
