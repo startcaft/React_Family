@@ -1,5 +1,6 @@
 
 // import './index.css';
+import less from './assets/styles/index.less';
 
 // const func = (str) => {
 //     document.getElementById('app').innerHTML = str;

@@ -3,25 +3,41 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const webpack = require('webpack');
+const extractTextPlugin = require("extract-text-webpack-plugin");
+
 
 module.exports = {
-    devtool:'inline-source-map',
-    entry:'./src/index.js',
-    output:{
-        path:path.resolve(__dirname,'dist'),
-        filename:'bundle-[hash].js'
+    devtool: 'inline-source-map',
+    entry: './src/index.js',
+    output: {
+        path: path.resolve(__dirname, 'dist'),
+        filename: 'bundle-[hash].js'
     },
-    devServer:{
-        contentBase:path.resolve(__dirname,'dist'), //最好设置成绝对路径
-        host:'localhost',
-        port:5678,
-        open:true
+    devServer: {
+        contentBase: path.resolve(__dirname, 'dist'), //最好设置成绝对路径
+        host: 'localhost',
+        port: 5678,
+        open: true
     },
-    module:{
-        rules:[
+    module: {
+        rules: [
+            {
+                test: /\.less$/,
+                use: [{
+                    loader: "style-loader" // creates style nodes from JS strings
+                }, {
+                    loader: "css-loader" // translates CSS into CommonJS
+                }, {
+                    loader: "less-loader" // compiles Less to CSS
+                }]
+            }
+            ,
             {
                 test: /\.css$/,
-                use: ['style-loader', 'css-loader']
+                use: extractTextPlugin.extract({
+                    fallback: "style-loader",
+                    use: "css-loader"
+                })
             },
             {
                 test: /\.js$/,
@@ -39,17 +55,18 @@ module.exports = {
             },
             {
                 test: /\.(htm|html)$/i,
-                 use:[ 'html-withimg-loader'] 
+                use: ['html-withimg-loader']
             }
         ]
     },
-    plugins:[
+    plugins: [
         new HtmlWebpackPlugin({
-            title:'Hello Webpack',
+            title: 'Hello Webpack',
             template: './src/index.html'
         }),
         new CleanWebpackPlugin(path.join(__dirname, 'dist')),
         new webpack.NamedModulesPlugin(),
-        new webpack.HotModuleReplacementPlugin()
+        new webpack.HotModuleReplacementPlugin(),
+        new extractTextPlugin("/css/index.css")
     ]
 }
