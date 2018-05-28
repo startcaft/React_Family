@@ -12,6 +12,7 @@ import { siderView as SiderView } from '../siderModule/index';
 import { header as HeaderView } from '../headerModule/index';
 import { calendars as Calendars } from '../commons/index';
 import { index as IndexView,roleList as RoleList } from '../roleMgr/index';
+import { dicList as DicList } from '../dicMgr/index';
 
 
 const {Content, Footer} = Layout;
@@ -40,6 +41,7 @@ class Main extends Component {
                         <Switch>
                         <Route exact path={'/main'} component={IndexView} />
                         <Route path={'/main/admin/role/list'} component={RoleList} />
+                        <Route path={'/main/admin/dic/list'} component={DicList} />
                         {/*<Route exact path={'/app/form'} component={UForm} />*/}
                         <Route exact path={'/main/calendars'} component={Calendars} />
                         {/*<Route exact path={'/app/chart/echarts'} component={Echarts} />*/}
