@@ -2,13 +2,12 @@
 
 import React, { Component } from 'react';
 import { observer,inject } from 'mobx-react';
-import { Row, Col, Tooltip, Input, Table, Icon, Popconfirm, Button,message } from 'antd';
+import { withRouter } from "react-router-dom";
+import { Row, Col, Tooltip, Table, Icon, Popconfirm, Button,message } from 'antd';
 import { breadcrumb as BreadcrumbView } from '../../commons/index';
 import DicForm from './dicForm';
 
 import './index.less';
-
-const Search = Input.Search;
 
 
 @inject('rootStore')
@@ -17,11 +16,13 @@ class DicList extends Component {
     constructor(props){
         super(props);
 
+        this.userToken = JSON.parse(localStorage.getItem('token'));
+
         this.dicStore = props.rootStore.dicStore;
+        this.commonStore = props.rootStore.commonStore;
         this.formRef = this.formRef.bind(this);
         this.formCancel = this.formCancel.bind(this);
         this.createItem = this.createItem.bind(this);
-        this.handleCreate = this.handleCreate.bind(this);
     }
 
     /*接受表单页面回传过来的form对象，并且添加一个 form 的实例属性*/
@@ -38,41 +39,50 @@ class DicList extends Component {
         this.dicStore.setVisible(false);
     }
     /*提交表单，用于处理新建逻辑*/
-    handleCreate(e){
+    handleCreate = (e) => {
         e.preventDefault();
         const form = this.form;
         form.validateFieldsAndScroll((err, values) => {
             if (!err) {
-                // this.roleStore.saveRole(this.userToken.token,values);
+                //处理一下post的数据
+                const postData = values;
+                if(values.pid !== undefined){
+                    postData.pid = values.pid[0];
+                }
+                this.dicStore.saveDic(this.userToken.token,postData);
 
-                // let that = this;
-                // setTimeout(function() {
-                //     if(that.roleStore.msg !== undefined){
-                //         message.error(that.roleStore.msg); //失败信息
-                //     }
-                //     else {
-                //         // 刷新Table
-                //         that.roleStore.getRoles(that.userToken.token);
-                //     }
-                // }, 200);
+                let that = this;
+                setTimeout(function() {
+                    if(that.dicStore.msg !== undefined){
+                        message.error(that.dicStore.msg); //失败信息
+                    }
+                    else {
+                        // 刷新Table
+                        that.dicStore.getDics(that.userToken.token);
+                        // 清空表单
+                        form.resetFields();
+                    }
+                }, 200);
                 
             }
         });
     };
 
-    componentWillMount(){
-        const userToken = JSON.parse(localStorage.getItem('token'));
-        if(userToken == null){
-            alert('token过期，需要重新登陆');
-        }
-        else {
-            this.userToken = userToken;
-        }
-    }
 
     componentDidMount(){
-        // 请求数据
-        this.dicStore.getDics(this.userToken.token);
+        // 检查当前用户token
+        this.commonStore.checkUserToken(this.userToken.token);
+
+        // token有效则进行业务逻辑，否则就清空本地token，然后跳转到/login路由页面
+        const that = this;
+        setTimeout(() => {
+            if(that.commonStore.loginResult){
+                that.dicStore.getDics(that.userToken.token);
+            }
+            else {
+                that.props.history.push('/login');
+            }
+        }, 200);
     }
 
     render(){
@@ -120,22 +130,11 @@ class DicList extends Component {
                     <span><Popconfirm title="确定要删除吗?" okText="是" cancelText="否" onConfirm={() => this.handleDel(record.id)}><Icon type="minus-square-o" /> 删除 </Popconfirm></span>
                 </div>
         }];
-
-        console.log(this.dicStore.dics.length);
         
         return (
             <div>
                 <BreadcrumbView paths={['首页', '字典管理']} />
                 <div className='formBody'>
-                    <Row gutter={16}>
-                        <Col className="gutter-row" sm={24}>
-                            <Search
-                                placeholder="请输入关键字查询字典项"
-                                prefix={<Icon type="user" />}
-                                // onSearch={this.handleSearch}
-                            />
-                        </Col>
-                    </Row>
                     <Row gutter={16}>
                         <div className='plus' onClick={this.createItem}>
                             <Icon type="plus-circle" />
@@ -172,7 +171,7 @@ class DicList extends Component {
                         : <DicForm ref={this.formRef} visible={visible} 
                                 onCancel={this.formCancel} onCreate={this.handleCreate} 
                                 title="添加字典信息" okText="创建"
-                                dics={this.dicStore.dics}
+                                dics={this.dicStore.dics.slice()}
                         />
                     }
                 </div>
@@ -181,4 +180,4 @@ class DicList extends Component {
     }
 }
 
-export default DicList;
+export default withRouter(DicList);

@@ -43,6 +43,29 @@ class DicStore {
         }
         fetchDataGet(token, 'http://119.23.56.247:8223/core/dics/tree/0', startCb,successCb, failCb);
     }
+
+    @action
+    saveDic(token,data) {
+        const startCb = () => {
+            this.rootStore.dicStore.loading = true;
+        }
+        const successCb = (res) => {
+            if(res.reqSuccess){
+                this.rootStore.dicStore.msg = undefined;
+                this.rootStore.dicStore.visible = false;
+            }
+            else {
+                this.rootStore.dicStore.msg = res.msg;
+            }
+            this.rootStore.dicStore.loading = false;
+        }
+        const failCb = (error) => {
+            console.log(error);
+            this.rootStore.dicStore.msg = '添加字典项失败';
+            this.rootStore.dicStore.loading = false;
+        }
+        postData(token,data, 'http://119.23.56.247:8223/core/dics/save', startCb,successCb, failCb);
+    }
 }
 
 export default DicStore;

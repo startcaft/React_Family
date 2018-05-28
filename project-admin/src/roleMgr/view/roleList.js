@@ -1,6 +1,7 @@
 
 import React, { Component } from 'react';
 import { observer,inject } from 'mobx-react';
+import { withRouter } from "react-router-dom";
 import { Row, Col, Tooltip, Input, Table, Icon, Popconfirm, Button,message } from 'antd';
 import { breadcrumb as BreadcrumbView } from '../../commons/index';
 import RoleForm from './roleForm';
@@ -19,6 +20,7 @@ class RoleList extends Component {
 
         // 实例属性
         this.roleStore = props.rootStore.roleStore;
+        this.commonStore = props.rootStore.commonStore;
 
         // 方法绑定
         this.createItem = this.createItem.bind(this);
@@ -88,6 +90,8 @@ class RoleList extends Component {
                     else {
                         // 刷新Table
                         that.roleStore.getRoles(that.userToken.token);
+                        // 清空表单
+                        form.resetFields();
                     }
                 }, 200);
             }
@@ -124,8 +128,9 @@ class RoleList extends Component {
                     else {
                         // 刷新Table
                         that.roleStore.getRoles(that.userToken.token);
+                        // 清空表单
+                        form.resetFields();
                     }
-                    form.resetFields();
                 }, 200);
             }
         });
@@ -150,19 +155,21 @@ class RoleList extends Component {
 
     }
 
-    componentWillMount(){
-        const userToken = JSON.parse(localStorage.getItem('token'));
-        if(userToken == null){
-            alert('token过期，需要重新登陆');
-        }
-        else {
-            this.userToken = userToken;
-        }
-    }
-
     componentDidMount(){
-        // 请求数据
-        this.roleStore.getRoles(this.userToken.token);
+        const userToken = JSON.parse(localStorage.getItem('token'));
+        // 检查当前用户token
+        this.commonStore.checkUserToken(userToken.token);
+
+        // token有效则进行业务逻辑，否则就清空本地token，然后跳转到/login路由页面
+        const that = this;
+        setTimeout(() => {
+            if(that.commonStore.loginResult){
+                that.roleStore.getRoles(userToken.token);
+            }
+            else {
+                that.props.history.push('/login');
+            }
+        }, 200);
     }
 
     render() {
@@ -262,4 +269,4 @@ class RoleList extends Component {
     }
 }
 
-export default RoleList;
+export default withRouter(RoleList);

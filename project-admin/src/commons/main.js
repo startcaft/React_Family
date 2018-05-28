@@ -24,6 +24,11 @@ class Main extends Component {
         localStorage.removeItem("token");
     }
 
+    componentDidMount(){
+        const userToken = localStorage.getItem("token");
+        console.log(userToken);
+    }
+
     render(){
         let name;
         if (localStorage.getItem("token") === null) {

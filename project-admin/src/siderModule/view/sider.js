@@ -6,6 +6,7 @@ import React, { Component } from 'react';
 import { Layout, Menu, Icon } from 'antd';
 import { Link } from 'react-router-dom';
 import { observer,inject } from 'mobx-react';
+import { withRouter } from "react-router-dom";
 
 const { Sider } = Layout;
 const SubMenu = Menu.SubMenu;
@@ -13,7 +14,7 @@ const SubMenu = Menu.SubMenu;
 
 @inject('rootStore')
 @observer
-export default class SiderView extends Component{
+class SiderView extends Component{
     constructor(props){
         super(props);
 
@@ -28,31 +29,27 @@ export default class SiderView extends Component{
         console.log(e.key);
     };
 
-    componentWillMount(){
-        const userToken = JSON.parse(localStorage.getItem('token'));
-        if(userToken == null){
-            alert('token过期，需要重新登陆');
-        }
-        else {
-            this.userToken = userToken;
-        }
-    }
-
     componentDidMount() {
-        console.log(this.userToken.token);
-        this.siderStore.fetchUserMenus(this.userToken.username,this.userToken.token);
+        const userToken = JSON.parse(localStorage.getItem('token'));
+        // 检查当前用户token
+        this.commonStore.checkUserToken(userToken.token);
+
+        // token有效则进行业务逻辑，否则就清空本地token，然后跳转到/login路由页面
+        const that = this;
+        setTimeout(() => {
+            if(that.commonStore.loginResult){
+                that.siderStore.fetchUserMenus(userToken.username,userToken.token);
+            }
+            else {
+                that.props.history.push('/login');
+            }
+        }, 200);
     }
     // setMenuOpen = props => {
     //     const {path} = props;
     //     this.setState({
     //         openKey: path.substr(0, path.lastIndexOf('/')),
     //         selectedKey: path
-    //     });
-    // };
-    // onCollapse = (collapsed) => {
-    //     this.setState({
-    //         collapsed,
-    //         // firstHide: collapsed,
     //     });
     // };
     // menuClick = e => {
@@ -105,3 +102,5 @@ export default class SiderView extends Component{
         )
     }
 }
+
+export default withRouter(SiderView);

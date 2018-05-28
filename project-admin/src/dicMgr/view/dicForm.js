@@ -43,6 +43,8 @@ class DicForm extends Component {
             wrapperCol: { span: 16 },
         };
 
+        const dicArray = this.loadDate(this.props.dics);
+
         return (
             <Modal
                 visible={visible}
@@ -57,9 +59,9 @@ class DicForm extends Component {
                         {...FormItemLayout}
                         label="父级字典项"
                     >
-                        {getFieldDecorator('pid', {})(
-                            <Cascader expandTrigger="hover" 
-                                options={this.loadDate(this.props.dics)} placeholder="父级字典项,不选就是顶级字典项" />
+                        {getFieldDecorator('pid', {initialValue:[9,15,22]})(
+                            <Cascader expandTrigger="hover" changeOnSelect
+                                options={dicArray} placeholder="父级字典项,不选就是顶级字典项" />
                         )}
                     </FormItem>
                     <FormItem label="字典项名称" {...FormItemLayout} hasFeedback>
@@ -75,8 +77,8 @@ class DicForm extends Component {
                         )}
                     </FormItem>
                     <FormItem label="排序号" {...FormItemLayout} hasFeedback>
-                        {getFieldDecorator('seq', {})(
-                            <InputNumber min={1} max={100} defaultValue={50} value={50} />
+                        {getFieldDecorator('seq', {initialValue:99})(
+                            <InputNumber min={1} max={100} />
                         )}
                     </FormItem>
                     <FormItem label="描述信息" {...FormItemLayout} hasFeedback>
