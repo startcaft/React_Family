@@ -1,9 +1,7 @@
-
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const webpack = require('webpack');
-const extractTextPlugin = require("extract-text-webpack-plugin");
 
 
 module.exports = {
@@ -20,8 +18,7 @@ module.exports = {
         open: true
     },
     module: {
-        rules: [
-            {
+        rules: [{
                 test: /\.less$/,
                 use: [{
                     loader: "style-loader" // creates style nodes from JS strings
@@ -30,14 +27,10 @@ module.exports = {
                 }, {
                     loader: "less-loader" // compiles Less to CSS
                 }]
-            }
-            ,
+            },
             {
                 test: /\.css$/,
-                use: extractTextPlugin.extract({
-                    fallback: "style-loader",
-                    use: "css-loader"
-                })
+                use: ['style-loader', 'css-loader']
             },
             {
                 test: /\.js$/,
@@ -66,7 +59,6 @@ module.exports = {
         }),
         new CleanWebpackPlugin(path.join(__dirname, 'dist')),
         new webpack.NamedModulesPlugin(),
-        new webpack.HotModuleReplacementPlugin(),
-        new extractTextPlugin("/css/index.css")
+        new webpack.HotModuleReplacementPlugin()
     ]
 }
