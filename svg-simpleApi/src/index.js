@@ -136,3 +136,9 @@ function encodeTranform(transObject) {
         'rotate(', transObject.rotate, ') ',
         'scale(', transObject.scale, ')'].join('');
 }
+
+if (module.hot) { 
+    module.hot.accept('./index.js', function(){ 
+        console.log('Accepting the updated intMe module!'); printMe(); 
+    }) 
+}
