@@ -10,42 +10,9 @@
 
 <body>
     <div id="toolbox">
-        <h2>创建</h2>
-        <form id="create-shape">
-            <button type="button" create="rect">Rect</button>
-            <button type="button" create="circle">Circle</button>
-            <button type="button" create="ellipse">Ellipse</button>
-            <button type="button" create="line">Line</button>
-        </form>
-        <h2>形状</h2>
-        <form id="shape-attrs">
-            请先创建图形
-        </form>
-        <h2>外观和变换</h2>
-        <form id="look-and-transform" disabled="disabled">
-            <p>
-                <label style="display: inline;">填充</label>
-                <input id="fill" type="color" value="#ffffff" />
-            </p>
-            <p>
-                <label style="display: inline;">描边</label>
-                <input id="stroke" type="color" value="#ff0000" />
-                <input id="strokeWidth" type="range" value="1" />
-            </p>
-            <p>
-                <label>translateX</label>
-                <input id="translateX" type="range" min="-400" max="400" value="0" />
-
-                <label>translateY</label>
-                <input id="translateY" type="range" min="-400" max="400" value="0" />
-
-                <label>rotate</label>
-                <input id="rotate" type="range" min="-180" max="180" value="0" />
-
-                <label>scale</label>
-                <input id="scale" type="range" min="-1" max="2" step="0.01" value="1" />
-            </p>
-        </form>
+        <textarea id="input">
+            M 10 10,L 120 200
+        </textarea>
     </div>
     <div id="canvas"></div>
 </body>
